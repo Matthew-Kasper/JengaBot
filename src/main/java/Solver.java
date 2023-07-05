@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Main interface class for bot
  */
@@ -11,12 +13,17 @@ public class Solver {
         this.tower = new Tower(height);
     }
 
+    public ArrayList<Boolean[]> getCurrentTower() {
+        return (ArrayList<Boolean[]>) (tower.getPieces().clone());
+    }
+
     /**
      * First integer represents the height of piece removed, second integer represents piece in layer removed, third and fourth integer represent
      * where piece is to be placed using same notation as removing blocks
      */
     public int[] doComputerMove() {
-
+        // Stub
+        return new int[]{0, 0, 0, 0};
     }
 
     /**
