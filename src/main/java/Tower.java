@@ -104,6 +104,19 @@ public class Tower {
                 // Not full layer below or block already exists. Can not remove
                 return false;
             }
+        } else if (blockCoordinates[0] == lowestEmptyLayer - 1 && !Arrays.equals(pieces.get(blockCoordinates[0]), Constants.defaultFullLayer)) {
+            // If trying to place block below lowest empty layer and current layer is incomplete
+            if (!pieces.get(blockCoordinates[0])[1]) {
+                // If piece does not exist. Can place.
+                pieces.get(blockCoordinates[0])[1] = true;
+                return true;
+            } else {
+                // If piece already exists. Can not place.
+                return false;
+            }
+        } else {
+            // Neither of two placing requirements met
+            return false;
         }
     }
 }
