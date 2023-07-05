@@ -20,6 +20,8 @@ public class TextInterface {
         // Initialize the solver
         Solver solver = new Solver(height);
 
+        boolean skipComputer = false;
+
         // Continue to read moves forever
         while (true) {
             if (humanMovingFirst) {
@@ -39,9 +41,15 @@ public class TextInterface {
                 displayComputerMoves(computerMoves);
 
             } else {
-                // Computer move
-                int[] computerMoves = solver.doComputerMove();
-                displayComputerMoves(computerMoves);
+
+                if (!skipComputer) {
+                    // Computer move
+                    int[] computerMoves = solver.doComputerMove();
+                    displayComputerMoves(computerMoves);
+                } else {
+                    // Skips the computer for one turn
+                    skipComputer = false;
+                }
 
                 // Human Move
                 int[] move = scanMove(textIn);
@@ -51,6 +59,8 @@ public class TextInterface {
                     System.out.println("Playing move.");
                 } else {
                     System.out.println("Illegal move.");
+                    // Allow user to return directly to retrying the move
+                    skipComputer = true;
                     continue;
                 }
             }
@@ -67,7 +77,7 @@ public class TextInterface {
         System.out.println("Please input height of block to place. (Starting at 0).");
         int placeHeight = textIn.nextInt();
 
-        System.out.println("Please input height of block to place. (Starting at 0).");
+        System.out.println("Please input which block on layer to place. (0 - 2. 0 is leftmost block from operator's view.)");
         int pieceToPlaceOnLayer = textIn.nextInt();
 
         return new int[]{removeHeight, pieceToRemoveOnLayer, placeHeight, pieceToPlaceOnLayer};
