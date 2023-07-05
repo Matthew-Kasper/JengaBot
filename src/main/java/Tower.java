@@ -35,17 +35,17 @@ public class Tower {
     /**
      * Removes a piece from the tower while checking that piece can be removed
      */
-    public boolean removePiece(int[] blockCoordinates) {
+    public boolean removePiece(int removeLayer, int removePieceOnLayer) {
         // Make sure that the layer exists
-        if (blockCoordinates[0] >= 0 && blockCoordinates[0] < pieces.size()) {
-            Boolean[] layer = pieces.get(blockCoordinates[0]);
+        if (removeLayer >= 0 && removeLayer < pieces.size()) {
+            Boolean[] layer = pieces.get(removeLayer);
 
-            if (blockCoordinates[1] >= 0 && blockCoordinates[1] < layer.length) {
+            if (removePieceOnLayer >= 0 && removePieceOnLayer < layer.length) {
 
                 // If block exists
-                if (layer[blockCoordinates[1]]) {
+                if (layer[removePieceOnLayer]) {
                     // Remove block
-                    layer[blockCoordinates[1]] = false;
+                    layer[removePieceOnLayer] = false;
                     return true;
                 } else {
                     // Block was already taken out
@@ -64,7 +64,7 @@ public class Tower {
     /**
      * Places a piece on the top layer while checking that it is valid
      */
-    public boolean placePiece(int[] blockCoordinates) {
+    public boolean placePiece(int placeLayer, int placePieceOnLayer) {
         int lowestEmptyLayer = -1;
 
         // Find lowest empty layer
@@ -92,23 +92,23 @@ public class Tower {
         }
 
         // If trying to place block on empty layer
-        if (blockCoordinates[0] == lowestEmptyLayer) {
+        if (placeLayer == lowestEmptyLayer) {
             // Make sure layer below is not an incomplete layer and a block is being placed where there is not already one
             Boolean[] layerBelow = pieces.get(lowestEmptyLayer - 1);
-            if (Arrays.equals(layerBelow, Constants.defaultFullLayer) && !pieces.get(blockCoordinates[0])[1]) {
+            if (Arrays.equals(layerBelow, Constants.defaultFullLayer) && !pieces.get(placeLayer)[placePieceOnLayer]) {
                 // Full layer below and block does not exist already. Can remove
-                pieces.get(blockCoordinates[0])[1] = true;
+                pieces.get(placeLayer)[placePieceOnLayer] = true;
                 return true;
 
             } else {
                 // Not full layer below or block already exists. Can not remove
                 return false;
             }
-        } else if (blockCoordinates[0] == lowestEmptyLayer - 1 && !Arrays.equals(pieces.get(blockCoordinates[0]), Constants.defaultFullLayer)) {
+        } else if (placeLayer == lowestEmptyLayer - 1 && !Arrays.equals(pieces.get(placeLayer), Constants.defaultFullLayer)) {
             // If trying to place block below lowest empty layer and current layer is incomplete
-            if (!pieces.get(blockCoordinates[0])[1]) {
+            if (!pieces.get(placeLayer)[placePieceOnLayer]) {
                 // If piece does not exist. Can place.
-                pieces.get(blockCoordinates[0])[1] = true;
+                pieces.get(placeLayer)[placePieceOnLayer] = true;
                 return true;
             } else {
                 // If piece already exists. Can not place.
@@ -118,5 +118,13 @@ public class Tower {
             // Neither of two placing requirements met
             return false;
         }
+    }
+
+    public void forcePlace(int placeLayer, int placePieceOnLayer) {
+        pieces.get(placeLayer)[placePieceOnLayer] = true;
+    }
+
+    public void forceRemove(int placeLayer, int placePieceOnLayer) {
+        pieces.get(placeLayer)[placePieceOnLayer] = false;
     }
 }
