@@ -22,6 +22,10 @@ public class Solver {
      * where piece is to be placed using same notation as removing blocks
      */
     public int[] doComputerMove() {
+        int[] maxRemoveFavorability;
+        
+        int[] maxPlaceFavorability;
+
         // Stub
         return new int[]{0, 0, 0, 0};
     }

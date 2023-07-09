@@ -16,12 +16,12 @@ public class Tower {
         // Denote blocks up to height as existing
         for (int i = 0; i < height; i++) {
             // Adds a clone of the default layer in each layer of the tower
-            pieces.add(i, Constants.defaultFullLayer.clone());
+            pieces.add(i, Constants.DEFAULT_FULL_LAYER.clone());
         }
 
         // Denote blocks above height as not existing (waiting to be filled)
         for (int i = height; i < height + Constants.BLOCK_ON_TOP_INIT_SPACE; i++) {
-            pieces.add(i, Constants.defaultEmptyLayer.clone());
+            pieces.add(i, Constants.DEFAULT_EMPTY_LAYER.clone());
         }
     }
 
@@ -72,7 +72,7 @@ public class Tower {
             Boolean[] currentLayer = pieces.get(i);
 
             // Check to find the lowest empty layer
-            if (Arrays.equals(currentLayer, Constants.defaultEmptyLayer)) {
+            if (Arrays.equals(currentLayer, Constants.DEFAULT_EMPTY_LAYER)) {
                 lowestEmptyLayer = i;
                 break;
             }
@@ -85,7 +85,7 @@ public class Tower {
 
             // Create five new empty layers
             for (int i = 0; i < 5; i++) {
-                pieces.add(Constants.defaultEmptyLayer);
+                pieces.add(Constants.DEFAULT_EMPTY_LAYER);
             }
 
             pieces.trimToSize();
@@ -95,7 +95,7 @@ public class Tower {
         if (placeLayer == lowestEmptyLayer) {
             // Make sure layer below is not an incomplete layer and a block is being placed where there is not already one
             Boolean[] layerBelow = pieces.get(lowestEmptyLayer - 1);
-            if (Arrays.equals(layerBelow, Constants.defaultFullLayer) && !pieces.get(placeLayer)[placePieceOnLayer]) {
+            if (Arrays.equals(layerBelow, Constants.DEFAULT_FULL_LAYER) && !pieces.get(placeLayer)[placePieceOnLayer]) {
                 // Full layer below and block does not exist already. Can remove
                 pieces.get(placeLayer)[placePieceOnLayer] = true;
                 return true;
@@ -104,7 +104,7 @@ public class Tower {
                 // Not full layer below or block already exists. Can not remove
                 return false;
             }
-        } else if (placeLayer == lowestEmptyLayer - 1 && !Arrays.equals(pieces.get(placeLayer), Constants.defaultFullLayer)) {
+        } else if (placeLayer == lowestEmptyLayer - 1 && !Arrays.equals(pieces.get(placeLayer), Constants.DEFAULT_FULL_LAYER)) {
             // If trying to place block below lowest empty layer and current layer is incomplete
             if (!pieces.get(placeLayer)[placePieceOnLayer]) {
                 // If piece does not exist. Can place.
