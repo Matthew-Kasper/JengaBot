@@ -1,6 +1,7 @@
 import org.ode4j.ode.*;
 
-import static org.ode4j.ode.OdeConstants.*;
+import static org.ode4j.ode.OdeConstants.dContactBounce;
+import static org.ode4j.ode.OdeConstants.dInfinity;
 
 public class CollisionsCallback implements DGeom.DNearCallback {
     @Override
@@ -17,12 +18,11 @@ public class CollisionsCallback implements DGeom.DNearCallback {
         DContactBuffer contacts = new DContactBuffer(Constants.MAX_CONTACTS);
         for (int i = 0; i < Constants.MAX_CONTACTS; i++) {
             DContact contact = contacts.get(i);
-            contact.surface.mode = dContactBounce | dContactSoftCFM;
+            contact.surface.mode = dContactBounce;
             contact.surface.mu = dInfinity;
             contact.surface.mu2 = 0;
             contact.surface.bounce = 0.1;
             contact.surface.bounce_vel = 0.1;
-            contact.surface.soft_cfm = 0.01;
         }
 
         // Find number of contacts
