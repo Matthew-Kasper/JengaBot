@@ -28,7 +28,7 @@ public class Physics {
         data.getSpace().collide(data, new CollisionsCallback());
 
         // Run simulation
-        data.getWorld().step(Constants.SIM_STEP_SIZE);
+        data.getWorld().quickStep(Constants.SIM_STEP_SIZE);
 
         // Remove contact joints
         data.getContactGroup().empty();
