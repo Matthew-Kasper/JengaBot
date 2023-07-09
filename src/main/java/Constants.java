@@ -12,8 +12,8 @@ public class Constants {
     public static final double PIECE_DENSITY = .38;
 
     // All in meters
-    public static final double PIECE_WIDTH = .015;
-    public static final double PIECE_HEIGHT = .025;
+    public static final double PIECE_HEIGHT = .015;
+    public static final double PIECE_WIDTH = .025;
     public static final double PIECE_LENGTH = .075;
 
     // In m/s^2
@@ -22,6 +22,9 @@ public class Constants {
     // Simulation
 
     // 100 steps at .05 is 1 second
-    public static final double SIM_STEP_SIZE = .05;
+    public static final double SIM_STEP_SIZE = .02;
     public static final int MAX_CONTACTS = 8;
+
+    public static final double BLOCK_SEPARATION_HORIZ = .00275;
+    public static final double BLOCK_SEPARATION_VERT = 0;
 }
