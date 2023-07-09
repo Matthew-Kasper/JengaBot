@@ -4,12 +4,12 @@ public class PhysicsTest {
 
     @Test
     public void TowerSimulationTest() {
-        Tower tower = new Tower(6);
+        Tower tower = new Tower(18);
 
         SimulationData simData = Physics.createSimulation(tower);
 
         // Take a piece to track
-        PhysicsPiece piece = simData.getPhysicsPieces().get(5)[1];
+        PhysicsPiece piece = simData.getPhysicsPieces().get(17)[1];
 
         // Print height of tracked
         System.out.println("Initial Position:" + " X: " + piece.getPosition()[0] + " Y: " + piece.getPosition()[1] + " Z: " + piece.getPosition()[2]);
