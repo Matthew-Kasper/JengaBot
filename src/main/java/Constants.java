@@ -12,9 +12,9 @@ public class Constants {
     public static final double PIECE_DENSITY = .38;
 
     // All in meters
-    public static final double PIECE_HEIGHT = .015;
-    public static final double PIECE_WIDTH = .025;
-    public static final double PIECE_LENGTH = .075;
+    public static final double PIECE_HEIGHT = 1.5;
+    public static final double PIECE_WIDTH = 2.5;
+    public static final double PIECE_LENGTH = 7.5;
 
     // In m/s^2
     public static final double GRAVITY_Y = -9.81;
@@ -25,6 +25,6 @@ public class Constants {
     public static final double SIM_STEP_SIZE = .02;
     public static final int MAX_CONTACTS = 8;
 
-    public static final double BLOCK_SEPARATION_HORIZ = .00275;
+    public static final double BLOCK_SEPARATION_HORIZ = 0;
     public static final double BLOCK_SEPARATION_VERT = 0;
 }
