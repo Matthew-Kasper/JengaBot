@@ -11,7 +11,7 @@ public class Constants {
     // Units in KG/M^3
     public static final double PIECE_DENSITY = .38;
 
-    // All in meters
+    // All in meters. Simulation uses giant blocks to increase stability
     public static final double PIECE_HEIGHT = 1.5;
     public static final double PIECE_WIDTH = 2.5;
     public static final double PIECE_LENGTH = 7.5;
