@@ -8,13 +8,15 @@ public class Solver {
     // Tower that represents playing field
     private final Tower tower;
 
-    // Input the play tower to initialize solver
+    /**
+     * Input the play tower to initialize solver
+     */
     public Solver(int height) {
         this.tower = new Tower(height);
     }
 
     public ArrayList<Boolean[]> getCurrentTower() {
-        return (ArrayList<Boolean[]>) (tower.getPieces().clone());
+        return tower.getPieces();
     }
 
     /**
@@ -22,12 +24,76 @@ public class Solver {
      * where piece is to be placed using same notation as removing blocks
      */
     public int[] doComputerMove() {
-        int[] maxRemoveFavorability;
-        
-        int[] maxPlaceFavorability;
+        ArrayList<Boolean[]> pieces = tower.getPieces();
 
-        // Stub
-        return new int[]{0, 0, 0, 0};
+        // Set a default value for lowest remove stability. (Index 0 represents stability, index 1 represents height of block, index 2 represents which piece block is)
+        double[] lowestRemoveStability = new double[]{Integer.MAX_VALUE, -1, -1};
+
+        // Try and remove every block to find the lowest remove stability
+        for (int i = 0; i < pieces.size(); i++) {
+            for (int j = 0; j < pieces.get(i).length; j++) {
+                // If piece exists, try to find stability if you pull it out
+                if (pieces.get(i)[j]) {
+                    // Create a test tower to find stability of a tower with this piece pulled out
+                    // Test tower is a clone of the real tower
+                    Tower testTower = new Tower(pieces);
+
+                    // Remove the piece from the test tower
+                    testTower.forceRemove(i, j);
+
+                    // Simulate and find the stability
+                    SimulationData simData = Physics.createSimulation(testTower);
+                    Physics.simulateN(simData, Constants.SIMULATION_TIME);
+
+                    double stability = Physics.determineStability(simData.getPhysicsPieces());
+                    Physics.terminateSimulation(simData);
+
+                    // Set the new lowest remove stability
+                    if (stability < lowestRemoveStability[0]) {
+                        lowestRemoveStability[0] = stability;
+                        lowestRemoveStability[1] = i;
+                        lowestRemoveStability[2] = j;
+                    }
+                }
+            }
+        }
+
+        double[] lowestPlaceStability = new double[]{Integer.MAX_VALUE, -1, -1};
+        ArrayList<int[]> possiblePlacements = tower.findAvailablePlacements();
+
+        // Find minimum stability of each of the possible place positions
+        for (int[] placement : possiblePlacements) {
+            if (placement != null) {
+                // Create a test tower to find stability of a tower with this piece pulled out
+                // Test tower is a clone of the real tower
+                Tower testTower = new Tower(pieces);
+
+                // Remove the piece from the test tower
+                testTower.forceRemove((int) lowestRemoveStability[1], (int) lowestRemoveStability[2]);
+                testTower.forcePlace(placement[0], placement[1]);
+
+                // Simulate and find the stability
+                SimulationData simData = Physics.createSimulation(testTower);
+                Physics.simulateN(simData, Constants.SIMULATION_TIME);
+
+                double stability = Physics.determineStability(simData.getPhysicsPieces());
+
+                Physics.terminateSimulation(simData);
+
+                // Set the new lowest remove stability
+                if (stability < lowestPlaceStability[0]) {
+                    lowestPlaceStability[0] = stability;
+                    lowestPlaceStability[1] = placement[0];
+                    lowestPlaceStability[2] = placement[1];
+                }
+            }
+        }
+        int[] move = new int[]{(int) lowestRemoveStability[1], (int) lowestRemoveStability[2], (int) lowestPlaceStability[1], (int) lowestPlaceStability[2]};
+
+        // Perform the move
+        doMove(move[0], move[1], move[2], move[3]);
+
+        return move;
     }
 
     /**

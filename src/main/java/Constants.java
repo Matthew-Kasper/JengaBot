@@ -27,4 +27,5 @@ public class Constants {
 
     public static final double BLOCK_SEPARATION_HORIZ = 0;
     public static final double BLOCK_SEPARATION_VERT = 0;
+    public static final int SIMULATION_TIME = 1000;
 }
