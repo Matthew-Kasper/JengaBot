@@ -66,7 +66,7 @@ public class PhysicsTest {
         DVector3 cmInit = Physics.findCenterOfMass(simulationData.getPhysicsPieces());
         System.out.println("CM Init: " + "X: " + cmInit.get0() + " Y: " + cmInit.get1() + " Z: " + cmInit.get2());
 
-        Physics.simulateN(simulationData, 1000);
+        Physics.simulateN(simulationData, 500);
 
         DVector3 cmFinal = Physics.findCenterOfMass(simulationData.getPhysicsPieces());
         System.out.println("CM Final: " + "X: " + cmFinal.get0() + " Y: " + cmFinal.get1() + " Z: " + cmFinal.get2());
