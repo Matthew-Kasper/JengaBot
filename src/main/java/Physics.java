@@ -7,9 +7,19 @@ import org.ode4j.ode.OdeHelper;
 import java.util.ArrayList;
 
 public class Physics {
-    public static int determineStability() {
+    /**
+     * Determines the stability of a physics tower. (Greater numbers represent higher chance to fall)
+     */
+    public static double determineStability(ArrayList<PhysicsPiece[]> physicsTower) {
+        DVector3 centerOfMass = findCenterOfMass(physicsTower);
 
-        return 0;
+        // Get a 2D projection of the center of mass
+        double[] xZProjection = new double[2];
+        xZProjection[0] = centerOfMass.get0();
+        xZProjection[1] = centerOfMass.get2();
+
+        // Stability is the distance of the center of mass of the tower to the orgin
+        return Math.sqrt((xZProjection[0] * xZProjection[0]) + (xZProjection[1] * xZProjection[1]));
     }
 
     /**
