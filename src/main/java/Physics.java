@@ -1,3 +1,4 @@
+import org.ode4j.math.DVector3;
 import org.ode4j.ode.DJointGroup;
 import org.ode4j.ode.DSpace;
 import org.ode4j.ode.DWorld;
@@ -9,6 +10,51 @@ public class Physics {
     public static int determineStability() {
 
         return 0;
+    }
+
+    /**
+     * Finds the center of mass of a physics tower system
+     */
+    public static DVector3 findCenterOfMass(ArrayList<PhysicsPiece[]> physicsTower) {
+
+        // Find the mass of a single piece
+        double pieceVolume = Constants.PIECE_WIDTH * Constants.PIECE_HEIGHT * Constants.PIECE_LENGTH;
+        double pieceMass = pieceVolume * Constants.PIECE_DENSITY;
+
+        double totalSystemMass = 0;
+
+        double xCMPre = 0;
+        double yCMPre = 0;
+        double zCMPre = 0;
+
+        // Add up all the pieces to find the total mass
+        for (PhysicsPiece[] pieces : physicsTower) {
+            for (PhysicsPiece piece : pieces) {
+                if (piece != null) {
+                    // For each piece of the tower, add a mass of a piece to the totalSystemMass
+                    totalSystemMass += pieceMass;
+
+                    // Sum piece mass times position for each component to get pre center of mass before dividing my total mass
+                    double[] piecePos = piece.getPosition();
+                    xCMPre += pieceMass * piecePos[0];
+                    yCMPre += pieceMass * piecePos[1];
+                    zCMPre += pieceMass * piecePos[2];
+                }
+            }
+        }
+
+        if (totalSystemMass == 0) {
+            // Return a vector of (0, 0, 0) if tower has no mass
+            return new DVector3();
+        }
+
+        // Find final center of mass components
+        double xCM = xCMPre / totalSystemMass;
+        double yCM = yCMPre / totalSystemMass;
+        double zCM = zCMPre / totalSystemMass;
+
+        // Wrap components as a single vector
+        return new DVector3(xCM, yCM, zCM);
     }
 
     /**
