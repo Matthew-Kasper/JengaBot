@@ -1,3 +1,5 @@
+package JengaBot;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,9 +11,12 @@ public class Tower {
     // True represents the piece exists on the tower
     private final ArrayList<Boolean[]> pieces;
 
+    /**
+     * Creates a full tower with a given height
+     */
     public Tower(int height) {
         // Add extra 5 to account for extra blocks on top
-        pieces = new ArrayList<Boolean[]>(height + Constants.BLOCK_ON_TOP_INIT_SPACE);
+        pieces = new ArrayList<>(height + Constants.BLOCK_ON_TOP_INIT_SPACE);
 
         // Denote blocks up to height as existing
         for (int i = 0; i < height; i++) {
@@ -25,17 +30,17 @@ public class Tower {
         }
     }
 
+    /**
+     * Creates a tower based on a piece layout
+     */
     public Tower(ArrayList<Boolean[]> piecesTemplate) {
-        ArrayList<Boolean[]> pieces = new ArrayList<Boolean[]>(piecesTemplate.size());
+        ArrayList<Boolean[]> pieces = new ArrayList<>(piecesTemplate.size());
 
         // Recreate a new pieces structure from the template
         for (int i = 0; i < piecesTemplate.size(); i++) {
             Boolean[] layer = new Boolean[piecesTemplate.get(i).length];
-            for (int j = 0; j < piecesTemplate.get(i).length; j++) {
-
-                // Assign the correct value to the piece slot based on template
-                layer[j] = piecesTemplate.get(i)[j];
-            }
+            // Assign the correct value to the piece slot based on template
+            System.arraycopy(piecesTemplate.get(i), 0, layer, 0, piecesTemplate.get(i).length);
 
             // Add the layer to the new pieces structure
             pieces.add(i, layer);
@@ -157,7 +162,7 @@ public class Tower {
     public int getLowestEmptyLayer() {
         int lowestEmptyLayer = -1;
 
-        // Find lowest empty layer
+        // Find the lowest empty layer
         for (int i = 0; i < pieces.size(); i++) {
             Boolean[] currentLayer = pieces.get(i);
 

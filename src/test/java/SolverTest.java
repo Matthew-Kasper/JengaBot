@@ -1,3 +1,5 @@
+import JengaBot.Constants;
+import JengaBot.Solver;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

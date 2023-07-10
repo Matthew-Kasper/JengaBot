@@ -1,3 +1,7 @@
+package JengaBot.Physics;
+
+import JengaBot.Constants;
+import JengaBot.Tower;
 import org.ode4j.math.DVector3;
 import org.ode4j.ode.DJointGroup;
 import org.ode4j.ode.DSpace;
@@ -6,7 +10,7 @@ import org.ode4j.ode.OdeHelper;
 
 import java.util.ArrayList;
 
-public class Physics {
+public class PhysicsSim {
     /**
      * Determines the stability of a physics tower. (Greater numbers represent higher chance to fall)
      */
@@ -18,7 +22,7 @@ public class Physics {
         xZProjection[0] = centerOfMass.get0();
         xZProjection[1] = centerOfMass.get2();
 
-        // Stability is the distance of the center of mass of the tower to the orgin
+        // Stability is the distance of the center of mass of the tower to the origin
         return Math.sqrt((xZProjection[0] * xZProjection[0]) + (xZProjection[1] * xZProjection[1]));
     }
 
@@ -68,7 +72,7 @@ public class Physics {
     }
 
     /**
-     * Simulates physics for an n number of 20 step groups
+     * Simulates physics for an n number of 20-step groups
      */
     public static void simulateN(SimulationData data, int n) {
         for (int i = 0; i < n; i++) {
@@ -115,7 +119,7 @@ public class Physics {
         ArrayList<Boolean[]> pieces = tower.getPieces();
 
         // Create a structure to store the pieces
-        ArrayList<PhysicsPiece[]> physicsPieces = new ArrayList<PhysicsPiece[]>(pieces.size());
+        ArrayList<PhysicsPiece[]> physicsPieces = new ArrayList<>(pieces.size());
 
         // Adds a piece in the position corresponding to the piece of the tower
         for (int i = 0; i < pieces.size(); i++) {
@@ -140,33 +144,27 @@ public class Physics {
                     if (i % 2 == 0) {
                         piece.turn90();
                         switch (j) {
-                            case 0:
-                                // If on left side
-                                piece.setPosition(0, pieceHeight, Constants.PIECE_WIDTH + Constants.BLOCK_SEPARATION_HORIZ);
-                                break;
-                            case 1:
-                                // If in middle
-                                piece.setPosition(0, pieceHeight, 0);
-                                break;
-                            case 2:
-                                // If on right side
-                                piece.setPosition(0, pieceHeight, -Constants.PIECE_WIDTH - Constants.BLOCK_SEPARATION_HORIZ);
-                                break;
+                            case 0 ->
+                                    // If on left side
+                                    piece.setPosition(0, pieceHeight, Constants.PIECE_WIDTH + Constants.BLOCK_SEPARATION_HORIZ);
+                            case 1 ->
+                                    // If in middle
+                                    piece.setPosition(0, pieceHeight, 0);
+                            case 2 ->
+                                    // If on right side
+                                    piece.setPosition(0, pieceHeight, -Constants.PIECE_WIDTH - Constants.BLOCK_SEPARATION_HORIZ);
                         }
                     } else {
                         switch (j) {
-                            case 0:
-                                // If on left side
-                                piece.setPosition(-Constants.PIECE_WIDTH - Constants.BLOCK_SEPARATION_HORIZ, pieceHeight, 0);
-                                break;
-                            case 1:
-                                // If in middle
-                                piece.setPosition(0, pieceHeight, 0);
-                                break;
-                            case 2:
-                                // If on right side
-                                piece.setPosition(Constants.PIECE_WIDTH + Constants.BLOCK_SEPARATION_HORIZ, pieceHeight, 0);
-                                break;
+                            case 0 ->
+                                    // If on left side
+                                    piece.setPosition(-Constants.PIECE_WIDTH - Constants.BLOCK_SEPARATION_HORIZ, pieceHeight, 0);
+                            case 1 ->
+                                    // If in middle
+                                    piece.setPosition(0, pieceHeight, 0);
+                            case 2 ->
+                                    // If on right side
+                                    piece.setPosition(Constants.PIECE_WIDTH + Constants.BLOCK_SEPARATION_HORIZ, pieceHeight, 0);
                         }
                     }
                 }

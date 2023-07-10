@@ -1,3 +1,7 @@
+package JengaBot.Interfaces;
+
+import JengaBot.Solver;
+
 import java.util.Scanner;
 
 /**
@@ -10,7 +14,7 @@ public class TextInterface {
 
         System.out.println("Please input tower height. (Default is 18)");
 
-        // Tower height
+        // JengaBot.Tower height
         int height = textIn.nextInt();
 
         System.out.println("Is human moving first? (Answer true or false)");
@@ -61,13 +65,13 @@ public class TextInterface {
                     System.out.println("Illegal move.");
                     // Allow user to return directly to retrying the move
                     skipComputer = true;
-                    continue;
                 }
             }
         }
     }
 
     private static int[] scanMove(Scanner textIn) {
+
         System.out.println("Please input height of block to remove. (Starting at 0).");
         int removeHeight = textIn.nextInt();
 

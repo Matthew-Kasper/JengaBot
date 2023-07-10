@@ -1,3 +1,6 @@
+package JengaBot.Physics;
+
+import JengaBot.Constants;
 import org.ode4j.math.DMatrix3;
 import org.ode4j.math.DVector3C;
 import org.ode4j.ode.*;
@@ -7,8 +10,6 @@ import org.ode4j.ode.*;
  */
 public class PhysicsPiece {
     private final DBody body;
-    private final DMass mass;
-    private final DGeom geom;
     private final DMatrix3 rotationMatrix90;
 
     /**
@@ -17,7 +18,7 @@ public class PhysicsPiece {
      * @param world to put the piece in
      */
     public PhysicsPiece(DWorld world, DSpace space) {
-        // Creates rotation matrix for a 90 degree rotation
+        // Creates rotation matrix for a 90-degree rotation
         rotationMatrix90 = new DMatrix3();
         OdeMath.dRFromAxisAndAngle(rotationMatrix90, 0, 1, 0, 90);
 
@@ -25,14 +26,14 @@ public class PhysicsPiece {
         body = OdeHelper.createBody(world);
 
         // Create mass object
-        mass = OdeHelper.createMass();
+        DMass mass = OdeHelper.createMass();
         mass.setBox(Constants.PIECE_DENSITY, Constants.PIECE_WIDTH, Constants.PIECE_HEIGHT, Constants.PIECE_LENGTH);
 
         // Set mass to the body
         body.setMass(mass);
 
         // Create collisions geometry
-        geom = OdeHelper.createBox(space, Constants.PIECE_WIDTH, Constants.PIECE_HEIGHT, Constants.PIECE_LENGTH);
+        DGeom geom = OdeHelper.createBox(space, Constants.PIECE_WIDTH, Constants.PIECE_HEIGHT, Constants.PIECE_LENGTH);
 
         // Set geometry to the body
         geom.setBody(body);

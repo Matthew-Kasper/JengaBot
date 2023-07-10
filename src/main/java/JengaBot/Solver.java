@@ -1,3 +1,8 @@
+package JengaBot;
+
+import JengaBot.Physics.PhysicsSim;
+import JengaBot.Physics.SimulationData;
+
 import java.util.ArrayList;
 
 /**
@@ -5,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Solver {
 
-    // Tower that represents playing field
+    // JengaBot.Tower that represents playing field
     private final Tower tower;
 
     /**
@@ -42,11 +47,11 @@ public class Solver {
                     testTower.forceRemove(i, j);
 
                     // Simulate and find the stability
-                    SimulationData simData = Physics.createSimulation(testTower);
-                    Physics.simulateN(simData, Constants.SIMULATION_TIME);
+                    SimulationData simData = PhysicsSim.createSimulation(testTower);
+                    PhysicsSim.simulateN(simData, Constants.SIMULATION_TIME);
 
-                    double stability = Physics.determineStability(simData.getPhysicsPieces());
-                    Physics.terminateSimulation(simData);
+                    double stability = PhysicsSim.determineStability(simData.getPhysicsPieces());
+                    PhysicsSim.terminateSimulation(simData);
 
                     // Set the new lowest remove stability
                     if (stability < lowestRemoveStability[0]) {
@@ -73,12 +78,12 @@ public class Solver {
                 testTower.forcePlace(placement[0], placement[1]);
 
                 // Simulate and find the stability
-                SimulationData simData = Physics.createSimulation(testTower);
-                Physics.simulateN(simData, Constants.SIMULATION_TIME);
+                SimulationData simData = PhysicsSim.createSimulation(testTower);
+                PhysicsSim.simulateN(simData, Constants.SIMULATION_TIME);
 
-                double stability = Physics.determineStability(simData.getPhysicsPieces());
+                double stability = PhysicsSim.determineStability(simData.getPhysicsPieces());
 
-                Physics.terminateSimulation(simData);
+                PhysicsSim.terminateSimulation(simData);
 
                 // Set the new lowest remove stability
                 if (stability < lowestPlaceStability[0]) {

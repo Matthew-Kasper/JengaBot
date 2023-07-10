@@ -1,3 +1,7 @@
+import JengaBot.Physics.PhysicsPiece;
+import JengaBot.Physics.PhysicsSim;
+import JengaBot.Physics.SimulationData;
+import JengaBot.Tower;
 import org.junit.jupiter.api.Test;
 import org.ode4j.math.DVector3;
 
@@ -7,7 +11,7 @@ public class PhysicsTest {
     public void TowerSimulationTest() {
         Tower tower = new Tower(18);
 
-        SimulationData simData = Physics.createSimulation(tower);
+        SimulationData simData = PhysicsSim.createSimulation(tower);
 
         // Take a piece to track
         PhysicsPiece piece = simData.getPhysicsPieces().get(17)[1];
@@ -17,20 +21,20 @@ public class PhysicsTest {
 
         // Run simulation n times
         for (int i = 0; i < 1000; i++) {
-            Physics.simulate(simData);
+            PhysicsSim.simulate(simData);
 
             // Print height of tracked
             System.out.println("Iteration: " + i + " X: " + piece.getPosition()[0] + " Y: " + piece.getPosition()[1] + " Z: " + piece.getPosition()[2]);
         }
 
-        Physics.terminateSimulation(simData);
+        PhysicsSim.terminateSimulation(simData);
     }
 
     @Test
     public void TowerBuildTest() {
         Tower tower = new Tower(18);
 
-        SimulationData simulationData = Physics.createSimulation(tower);
+        SimulationData simulationData = PhysicsSim.createSimulation(tower);
 
         for (int i = 0; i < tower.getPieces().size(); i++) {
             for (int j = 0; j < tower.getPieces().get(i).length; j++) {
@@ -44,14 +48,14 @@ public class PhysicsTest {
     public void CenterOfMassTest() {
         Tower tower = new Tower(18);
 
-        SimulationData simulationData = Physics.createSimulation(tower);
+        SimulationData simulationData = PhysicsSim.createSimulation(tower);
 
-        DVector3 cmInit = Physics.findCenterOfMass(simulationData.getPhysicsPieces());
+        DVector3 cmInit = PhysicsSim.findCenterOfMass(simulationData.getPhysicsPieces());
         System.out.println("CM Init: " + "X: " + cmInit.get0() + " Y: " + cmInit.get1() + " Z: " + cmInit.get2());
 
-        Physics.simulateN(simulationData, 1000);
+        PhysicsSim.simulateN(simulationData, 1000);
 
-        DVector3 cmFinal = Physics.findCenterOfMass(simulationData.getPhysicsPieces());
+        DVector3 cmFinal = PhysicsSim.findCenterOfMass(simulationData.getPhysicsPieces());
         System.out.println("CM Final: " + "X: " + cmFinal.get0() + " Y: " + cmFinal.get1() + " Z: " + cmFinal.get2());
     }
 
@@ -61,14 +65,14 @@ public class PhysicsTest {
         tower.removePiece(0, 0);
         tower.removePiece(0, 1);
 
-        SimulationData simulationData = Physics.createSimulation(tower);
+        SimulationData simulationData = PhysicsSim.createSimulation(tower);
 
-        DVector3 cmInit = Physics.findCenterOfMass(simulationData.getPhysicsPieces());
+        DVector3 cmInit = PhysicsSim.findCenterOfMass(simulationData.getPhysicsPieces());
         System.out.println("CM Init: " + "X: " + cmInit.get0() + " Y: " + cmInit.get1() + " Z: " + cmInit.get2());
 
-        Physics.simulateN(simulationData, 500);
+        PhysicsSim.simulateN(simulationData, 500);
 
-        DVector3 cmFinal = Physics.findCenterOfMass(simulationData.getPhysicsPieces());
+        DVector3 cmFinal = PhysicsSim.findCenterOfMass(simulationData.getPhysicsPieces());
         System.out.println("CM Final: " + "X: " + cmFinal.get0() + " Y: " + cmFinal.get1() + " Z: " + cmFinal.get2());
     }
 }
