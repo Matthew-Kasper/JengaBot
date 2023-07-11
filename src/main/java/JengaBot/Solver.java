@@ -34,8 +34,11 @@ public class Solver {
         // Set a default value for lowest remove stability. (Index 0 represents stability, index 1 represents height of block, index 2 represents which piece block is)
         double[] lowestRemoveStability = new double[]{Integer.MAX_VALUE, -1, -1};
 
+        // Get the highest full layer to act as a boundary of pieces to search
+        int highestFullLayer = tower.getHighestFullLayer();
+
         // Try and remove every block to find the lowest remove stability
-        for (int i = 0; i < pieces.size(); i++) {
+        for (int i = 0; i < highestFullLayer; i++) {
             for (int j = 0; j < pieces.get(i).length; j++) {
                 // If piece exists, try to find stability if you pull it out
                 if (pieces.get(i)[j]) {

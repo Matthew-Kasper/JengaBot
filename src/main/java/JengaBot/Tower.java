@@ -60,8 +60,11 @@ public class Tower {
      * Removes a piece from the tower while checking that piece can be removed
      */
     public boolean removePiece(int removeLayer, int removePieceOnLayer) {
-        // Make sure that the layer exists
-        if (removeLayer >= 0 && removeLayer < pieces.size()) {
+
+        int highestFullLayer = getHighestFullLayer();
+
+        // Make sure that the layer exists and is a layer below the highest full layer
+        if (removeLayer >= 0 && removeLayer < highestFullLayer) {
             Boolean[] layer = pieces.get(removeLayer);
 
             if (removePieceOnLayer >= 0 && removePieceOnLayer < layer.length) {
@@ -187,5 +190,22 @@ public class Tower {
         }
 
         return lowestEmptyLayer;
+    }
+
+    public int getHighestFullLayer() {
+        int highestFullLayer = -1;
+
+        // Search from top down and find the first instance of a full layer
+        for (int i = pieces.size() - 1; i >= 0; i--) {
+            Boolean[] currentLayer = pieces.get(i);
+
+            // Check to find the lowest empty layer
+            if (Arrays.equals(currentLayer, Constants.DEFAULT_FULL_LAYER)) {
+                highestFullLayer = i;
+                break;
+            }
+        }
+
+        return highestFullLayer;
     }
 }
