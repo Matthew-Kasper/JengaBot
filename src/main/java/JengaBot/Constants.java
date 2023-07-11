@@ -23,7 +23,7 @@ public class Constants {
     // Simulation
 
     // 100 steps at .05 is 1 second
-    public static final double SIM_STEP_SIZE = .02;
+    public static final double SIM_STEP_SIZE = .015;
     public static final int MAX_CONTACTS = 8;
 
     public static final double BLOCK_SEPARATION_HORIZ = 0;
